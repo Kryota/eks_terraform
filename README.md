@@ -10,3 +10,5 @@ docker run \
   --entrypoint=ash \
   hashicorp/terraform:0.12.24
 ```
+
+`terraform init -backend-config "bucket=#{任意のバケット名}"`
