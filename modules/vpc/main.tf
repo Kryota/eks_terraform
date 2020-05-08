@@ -24,6 +24,39 @@ resource "aws_subnet" "public" {
   }
 }
 
+# Internet Gateway
+resource "aws_internet_gateway" "this" {
+  vpc_id = aws_vpc.this.id
+
+  tags = {
+    Name      = "igw-${var.name}"
+    Terraform = "true"
+  }
+}
+
+# Public Route Table
+resource "aws_route_table" "public" {
+  vpc_id = aws_vpc.this.id
+
+  tags = {
+    Name      = "rt-${var.name}-public"
+    Terraform = "true"
+  }
+}
+
+resource "aws_route" "public_internet_gateway" {
+  route_table_id         = aws_route_table.public.id
+  destination_cidr_block = "0.0.0.0/0"
+  gateway_id             = aws_internet_gateway.this.id
+}
+
+resource "aws_route_table_association" "public" {
+  count = length(var.subnet_azs)
+
+  subnet_id      = element(aws_subnet.public.*.id, count.index)
+  route_table_id = aws_route_table.public.id
+}
+
 # Private Subnet
 resource "aws_subnet" "private" {
   count             = length(var.private_subnet_cidrs)
