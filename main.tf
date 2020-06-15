@@ -13,9 +13,9 @@ terraform {
 module "vpc" {
   source = "./modules/vpc"
 
-  vpc_cidr             = "10.100.0.0/24"
+  vpc_cidr             = "10.100.0.0/21"
   name                 = "kr-eks-handson"
-  public_subnet_cidrs  = ["10.100.0.1/28", "10.100.0.16/28"]
-  private_subnet_cidrs = ["10.100.0.32/28", "10.100.0.48/28"]
+  public_subnet_cidrs  = ["10.100.1.0/24", "10.100.2.0/24"]
+  private_subnet_cidrs = ["10.100.3.0/24", "10.100.4.0/24"]
   subnet_azs           = ["ap-northeast-1a", "ap-northeast-1c"]
 }
