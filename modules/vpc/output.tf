@@ -7,3 +7,8 @@ output "private_subnet_ids" {
   description = "Private SubnetのID一覧"
   value       = aws_subnet.private.*.id
 }
+
+output "vpc_id" {
+  description = "VPCのID"
+  value       = aws_vpc.default.id
+}
